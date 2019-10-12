@@ -52,7 +52,7 @@ kubectl apply -f crds.yaml
 
 To interact directly with the {{site.prodname}} datastore, use the `calicoctl` client tool.
 
-### Install
+### Install calicoctl and configure it data source
 
 1. Download the `calicoctl` binary to a Linux host with access to Kubernetes.
 
@@ -61,22 +61,16 @@ To interact directly with the {{site.prodname}} datastore, use the `calicoctl` c
    chmod +x calicoctl
    sudo mv calicoctl /usr/local/bin/
    ```
-
-1. Configure `calicoctl` to access Kubernetes.
-
-   ```
-   export KUBECONFIG=/path/to/your/kubeconfig
-   export DATASTORE_TYPE=kubernetes
-   ```
-
+   
    On most systems, kubeconfig is located at `~/.kube/config`. You may wish to add the `export` lines to your `~/.bashrc` so they will persist when you log in next time.
 
 
-### Test
+### Test configuration of calicoctl
 
-Verify `calicoctl` can reach your datastore by running
-
+Verify `calicoctl` with the `KUBECONFIG` and `DATASTORE_TYP`E environment variables is capable of seeing all K8s nodes.
 ```
+export KUBECONFIG=/etc/kubernetes/admin.conf # This is the default location that kubeadm puts initial config.
+export DATASTORE_TYPE=kubernetes
 calicoctl get nodes
 ```
 
@@ -99,7 +93,7 @@ Try to get an object backed by a custom resource
 calicoctl get ippools
 ```
 
-You should see an empty result
+You should see an empty result, because alas, we haven't put any ippools in place (yet)...
 
 ```
 NAME   CIDR   SELECTOR
