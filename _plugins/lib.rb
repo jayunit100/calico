@@ -12,7 +12,7 @@
 #
 def parse_versions(versions_yml, version)
   if not versions_yml.key?(version)
-    raise IndexError.new "requested version '#{version}' not present in versions.yml"
+    raise IndexError.new "The key '#{version}', which is included in this release's configuration, is not present in the input versions.yml, available keys: #{versions_yml.keys})."
   end
 
   components = versions_yml[version][0]["components"].clone
